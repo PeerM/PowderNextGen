@@ -19,6 +19,17 @@ object Util {
     new Vector2D((xCord * gridSize) + halfGridSize, (yCord * gridSize) + halfGridSize)
   }
 
+  private def linearNeigh(pair: (Int, Int), lineSize: Int): Int = {
+    val (x, y) = pair
+    x + y * lineSize
+  }
+
+  val simpleOffsets: Vector[(Int, Int)] = Vector((-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1))
+
+  def linearizedNeighbours(linearizedCord: Int, lineSize: Int, totalSize: Int) = {
+    simpleOffsets.map(pair => (pair, linearNeigh(pair, lineSize))).map(pair => (pair._1, linearizedCord + pair._2)).filter(pair => pair._2 > 0 && pair._2 < totalSize)
+  }
+
   def vector2DClamp(vec: Vector2D, width: Float, height: Float): Vector2D = {
     val clampedX = min(max(0, vec.getX), width)
     val clampedY = min(max(0, vec.getY), height)

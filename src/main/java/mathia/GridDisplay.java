@@ -1,9 +1,6 @@
 package mathia;
 
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -42,7 +39,7 @@ public class GridDisplay extends Application {
         btnTick.setText("tick");
         btnTick.setOnAction(event -> {
             initGrid(grid);
-            World next = model.updateAndGet(World::update);
+            World next = model.updateAndGet(World::tick);
             draw(next, grid);
         });
 
