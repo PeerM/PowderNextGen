@@ -3,6 +3,7 @@ package mathia
 import mathia.Util._
 
 import scala.collection.JavaConverters._
+import scala.util.Random
 
 class World(val particles: Iterable[Powder]) {
   val gridSize = 1
@@ -25,6 +26,13 @@ class World(val particles: Iterable[Powder]) {
   }
 
   def update = new World(tick)
+
+  def randomParticles(nr: Int) = {
+    val rands = Range(0, nr).map((_) => Powder((Random.nextFloat() * width, Random.nextFloat() * width)))
+    new World(particles ++ rands)
+  }
+
+  def getParticles = particles.asJava
 }
 
 object World {
