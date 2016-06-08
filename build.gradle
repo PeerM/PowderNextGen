@@ -1,0 +1,35 @@
+group 'ferdinand-mathia'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'scala'
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.8'
+    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+
+
+    testCompile group: 'org.scalatest', name: 'scalatest_2.11', version: '2.2.6'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+
+
+buildscript {
+    ext.kotlin_version = '1.0.2'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
