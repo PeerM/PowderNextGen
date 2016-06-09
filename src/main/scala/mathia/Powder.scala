@@ -9,7 +9,7 @@ class Powder(val pos: Vector2D, val velocity: Vector2D) {
   def update(cell: Cell, deltaTime: Float, height: Float, width: Float) = {
     // TODO add drag
     //    val vecFromCellMiddle = pos subtract cell.middle
-    val acceleration = cell.pressureVec // function of cell.pressure, pos
+    val acceleration = cell.pressureVec scalarMultiply 3 // function of cell.pressure, pos
     val accelerationWithGravity = acceleration add Powder.gravity
     val newVelocity = velocity add(deltaTime, accelerationWithGravity) //  function of acceleration and velocity
     val newPos = pos add newVelocity
