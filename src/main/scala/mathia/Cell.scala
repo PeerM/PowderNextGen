@@ -18,9 +18,11 @@ object Cell {
     val nrParicles = particles.size
     val pressure = if (nrParicles < 1) 0 else nrParicles
     val ord = Ordering.by((_: ((Int, Int), Float))._2)
-    val maxOption = Util.linearizedNeighbours(linearPos, lineSize, math.min(lastState.size, totalSize))
-      .map(pair => pressureOrDefault(lastState, pair))
-      .map(pair => (pair._1, pressure - pair._2))
+    val pressureVecs: Vector[((Int, Int), Float)] =
+      Util.linearizedNeighbours(linearPos, lineSize, totalSize)
+        .map(pair => pressureOrDefault(lastState, pair))
+        .map(pair => (pair._1, pressure - pair._2))
+    val maxOption = pressureVecs
       .reduceOption(ord.max)
     val max = maxOption.getOrElse(((0, 0), 0f))
     new Cell(particles, new Vector2D(max._1._1 * pressureFactor, max._1._2 * pressureFactor), pressure)
