@@ -37,4 +37,13 @@ object Util {
     val clampedY = min(max(0, vec.getY), height)
     if (clampedX == vec.getX && clampedY == vec.getY) vec else new Vector2D(clampedX, clampedY)
   }
+
+  def allMax(accumulator: (Float, List[((Int, Int), Float)]), element: ((Int, Int), Float)): (Float, List[((Int, Int), Float)]) = {
+    val ((cord), pres) = element
+    val (max, elements) = accumulator
+    if (pres > max) {
+      (pres, List(element))
+    } else if
+  }
+
 }

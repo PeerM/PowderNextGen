@@ -2,6 +2,8 @@ package mathia
 
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D
 
+import scala.util.Random
+
 class Cell(val particles: Iterable[Powder], val pressureVec: Vector2D, val pressureAbs: Float) {
 
   def update(deltaTime: Float, width: Float, height: Float) = {
@@ -14,14 +16,18 @@ object Cell {
 
   val pressureFactor = 1
 
+  private val rand = new Random
+
   def apply(particles: Iterable[Powder], lastState: Map[Int, Cell], linearPos: Int, lineSize: Int, totalSize: Int): Cell = {
     val nrParicles = particles.size
     val pressure = if (nrParicles < 1) 0 else nrParicles
     val ord = Ordering.by((_: ((Int, Int), Float))._2)
-    val pressureVecs: Vector[((Int, Int), Float)] =
+    val pressureVecs =
       Util.linearizedNeighbours(linearPos, lineSize, totalSize)
         .map(pair => pressureOrDefault(lastState, pair))
         .map(pair => (pair._1, pressure - pair._2))
+        .filter { case (c, p) => p > 1 }
+    rand.nextInt(pressureVecs.size)
     val maxOption = pressureVecs
       .reduceOption(ord.max)
     val max = maxOption.getOrElse(((0, 0), 0f))
